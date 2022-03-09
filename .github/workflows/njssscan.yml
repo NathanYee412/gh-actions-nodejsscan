@@ -14,4 +14,9 @@ jobs:
       id: njsscan
       uses: ajinabraham/njsscan-action@v5
       with:
-        args: '.'
+        args: '. --sarif --output results.sarif || true' # forces a 0 exit code to continue to the next job. Have to use sometimes for static analysis 
+    - name: upload report to github code scanning 
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: results.sarif
+    
